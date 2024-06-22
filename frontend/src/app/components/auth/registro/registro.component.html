@@ -1,0 +1,93 @@
+<main>
+    <div class="container">
+
+        <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
+
+                        <div class="d-flex justify-content-center py-4">
+                            <a href="index.html" class="logo d-flex align-items-center w-auto">
+                                <img src="assets/img/logo.png" alt="">
+                                <span class="d-none d-lg-block">NiceAdmin</span>
+                            </a>
+                        </div><!-- End Logo -->
+
+                        <div class="card mb-3">
+
+                            <div class="card-body">
+
+                                <div class="pt-4 pb-2">
+                                    <h5 class="card-title text-center pb-0 fs-4">Create an Account</h5>
+                                    <p class="text-center small">Enter your personal details to create account</p>
+                                </div>
+
+                                <form [formGroup]="form_registro" (ngSubmit)="registrar()" class="row g-3 needs-validation" novalidate>
+                                    <div class="col-12">
+                                        <label for="nombre" class="form-label">Nombre</label>
+                                        <input 
+                                            formControlName="nombre"
+                                            type="text" name="nombre" class="form-control" id="nombre" required>
+                                        <div class="invalid-feedback">Please, enter your name!</div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <label for="apellido" class="form-label">Apellido</label>
+                                        <input 
+                                            formControlName="apellido"
+                                            type="text" name="apellido" class="form-control" id="apellido" required>
+                                        <div class="invalid-feedback">Please, enter your name!</div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <label for="usuario" class="form-label">Usuario</label>
+                                        <input 
+                                            formControlName="usuario"
+                                            type="text" name="usuario" class="form-control" id="usuario" required>
+                                        <div class="invalid-feedback">Please, enter your name!</div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <label for="correo" class="form-label">Correo</label>
+                                        <input 
+                                            formControlName="correo"
+                                            type="email" name="correo" class="form-control" id="correo" required>
+                                        <div class="invalid-feedback">Please enter a valid Email adddress!</div>
+                                    </div>
+
+
+                                    <div class="col-12">
+                                        <label for="password" class="form-label">Password</label>
+                                        <input 
+                                            formControlName="password"
+                                            type="password" name="password" class="form-control" id="password"
+                                            required>
+                                        <div class="invalid-feedback">Please enter your password!</div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <label for="confirm_password" class="form-label">Confirm password</label>
+                                        <input 
+                                            formControlName="confirm_password"
+                                            type="password" name="confirm_password" class="form-control" id="confirm_password"
+                                            required>
+                                        <div class="invalid-feedback">Please enter your password!</div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <button class="btn btn-primary w-100" type="submit">Create Account</button>
+                                    </div>
+
+                                </form>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+    </div>
+</main><!-- End #main -->
