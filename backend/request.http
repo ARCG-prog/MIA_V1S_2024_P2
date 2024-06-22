@@ -1,0 +1,15 @@
+####
+GET http://localhost:3000/admin/ciclo_for/8
+
+
+####
+POST http://localhost:3000/admin/registro
+Content-Type: application/json
+
+{
+    "nombre": "Diego",
+    "apellido": "Obin",
+    "usuario": "DiiAns23", 
+    "correo": "diego.obin23@gmail.com",
+    "password": "123456"
+}
