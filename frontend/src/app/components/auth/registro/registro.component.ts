@@ -4,6 +4,7 @@ import { ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterOutlet, RouterModule } from '@angular/router';
 import { FormGroup, FormControl } from '@angular/forms';
 import { UsuarioService } from '../../../services/usuario.service';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-registro',
@@ -46,16 +47,31 @@ export class RegistroComponent {
           next: (data: any) => {
             if(data.status){
               console.log('Usuario registrado');
-              alert('Usuario registrado');
+              Swal.fire({
+                title: 'Usuario registrado',
+                text: 'Usuario registrado correctamente',
+                icon: 'success',
+                confirmButtonText: 'Aceptar'
+              });
               // this.router.navigate(['']);
             }else{
-              alert('Error al registrar usuario');
+              Swal.fire({
+                title: 'Error al registrar usuario',
+                text: 'Error al registrar usuario',
+                icon: 'error',
+                confirmButtonText: 'Aceptar'
+              });
               console.log('Error al registrar usuario');
             }
           },
           error: (error: any) => {
             console.log(error.errors[0]);
-            alert(`Error al registrar usuario: ${error.errors}`);
+            Swal.fire({
+              title: 'Error al registrar usuario',
+              text: 'La base de datos no responde :c',
+              icon: 'error',
+              confirmButtonText: 'Aceptar'
+            });
             console.log('Error al registrar usuario');
           }
         }
