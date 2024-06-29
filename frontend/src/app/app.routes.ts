@@ -5,10 +5,5 @@ export const routes: Routes = [
     {
         path: 'login', 
         component: RegistroComponent
-    },
-    {
-        path: '',
-        component: RegistroComponent
     }
-
 ];

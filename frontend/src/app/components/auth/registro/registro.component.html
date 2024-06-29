@@ -18,21 +18,11 @@
                             <div class="card-body">
 
                                 <div class="pt-4 pb-2">
-                                    <h5 class="card-title text-center pb-0 fs-4">Crear Perfil</h5>
+                                    <h5 class="card-title text-center pb-0 fs-4">Create an Account</h5>
                                     <p class="text-center small">Enter your personal details to create account</p>
                                 </div>
 
                                 <form [formGroup]="form_registro" (ngSubmit)="registrar()" class="row g-3 needs-validation" novalidate>
-                                    <div class="col-12">
-                                        <label for="imagen" class="form-label">Imagen</label>
-                                        <input 
-                                            type="file" name="imagen" 
-                                            class="form-control" 
-                                            id="imagen" 
-                                            accept="image/*"
-                                            (change)="onFileSelected($event)"
-                                            required>
-                                    </div>
                                     <div class="col-12">
                                         <label for="nombre" class="form-label">Nombre</label>
                                         <input 
@@ -95,30 +85,6 @@
 
                     </div>
                 </div>
-
-                <!-- Mostrar en una tabla los usuarios -->
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Apellido</th>
-                            <th>Usuario</th>
-                            <th>Correo</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let usuario of lista_usuarios">
-                            <td>{{usuario.nombre}}</td>
-                            <td>{{usuario.apellido}}</td>
-                            <td>{{usuario.usuario}}</td>
-                            <td>{{usuario.correo}}</td>
-                            <td>
-                                <button class="btn btn-danger" (click)="eliminar(usuario.id)">Eliminar</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
             </div>
 
         </section>
