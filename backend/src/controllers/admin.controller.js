@@ -34,7 +34,7 @@ const registro = async (req, res) => {
     // const p_2 = await bcrypt.hash(password, 10);
     await uploadFile2(path, imagen);
 
-    const ruta_aws = `https://mia-v1s2024-bucket.s3.amazonaws.com/${path}`;
+    const ruta_aws = `https://bucket-prueba-mia-2024.s3.amazonaws.com/${path}`;
 
     console.log('Ruta AWS', ruta_aws);
     const result = await insertData('Usuarios', {
