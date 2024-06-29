@@ -1,4 +1,5 @@
 const { insertData } = require('../config/db.mongo');
+const { uploadFile2 } = require('../config/bucket');
 // const { bcrypt } = require('bcryptjs');
 
 const ciclo_for = async (req, res) =>  {
@@ -24,15 +25,20 @@ const ciclo_for = async (req, res) =>  {
 
 const registro = async (req, res) => {
     // Recibir los datos enviados desde el cliente
-    const { nombre, apellido, usuario, correo, password } = req.body;
+    const { path, imagen, nombre, apellido, usuario, correo, password } = req.body;
 
     // Manipulacion de datos
     // Insertar datos a la base de datos
     console.log('Datos recibidos', nombre, apellido, usuario, correo, password);
 
     // const p_2 = await bcrypt.hash(password, 10);
+    await uploadFile2(path, imagen);
 
+    const ruta_aws = `https://mia-v1s2024-bucket.s3.amazonaws.com/${path}`;
+
+    console.log('Ruta AWS', ruta_aws);
     const result = await insertData('Usuarios', {
+        imagen: ruta_aws,
         nombre,
         apellido,
         usuario,
@@ -46,16 +52,17 @@ const registro = async (req, res) => {
             {
                 status: false,
                 msg: 'Error al registrar usuario',
-                data: result
+                data: result,
+                image: ruta_aws
             });
     };
 
     // Respuesta
-    return res.status(200).json(
-    {
+    return res.status(200).json({
         status: true,
         msg: 'Registro exitoso',
-        data: result
+        data: result,
+        image: ruta_aws
     });
 };
 
