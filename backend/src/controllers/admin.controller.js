@@ -2,6 +2,11 @@ const { insertData } = require('../config/db.mongo');
 const { uploadFile2 } = require('../config/bucket');
 // const { bcrypt } = require('bcryptjs');
 
+const {
+    BUCKET_PATH
+} = process.env;
+
+
 const ciclo_for = async (req, res) =>  {
     
     // Recibir el parametro numero desde la URL
@@ -34,7 +39,7 @@ const registro = async (req, res) => {
     // const p_2 = await bcrypt.hash(password, 10);
     await uploadFile2(path, imagen);
 
-    const ruta_aws = `https://bucket-prueba-mia-2024.s3.amazonaws.com/${path}`;
+    const ruta_aws = `${BUCKET_PATH}/${path}`;
 
     console.log('Ruta AWS', ruta_aws);
     const result = await insertData('Usuarios', {
