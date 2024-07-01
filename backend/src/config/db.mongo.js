@@ -1,5 +1,6 @@
 const { MongoClient} = require('mongodb');
 require('dotenv').config();
+const bcrypt = require('bcrypt');
 
 const {
     MONGO_USER,
@@ -31,6 +32,27 @@ const insertData = async(collec, data) => {
     }
 };
 
+const authenticateUser = async (username, password) => {
+    try {
+        await mongoClient.connect();
+        const dbmongo = mongoClient.db(MONGO_DATABASE);
+        const coleccion = dbmongo.collection('usuarios');
+        const user = await coleccion.findOne({ username: username });
+        
+        if (user && bcrypt.compareSync(password, user.password)) {
+            return { success: true, user: user };
+        } else {
+            return { success: false, message: 'Invalid credentials' };
+        }
+    } catch (error) {
+        console.error('Error authenticateUser: ', error);
+        return { success: false, message: 'Error during authentication' };
+    } finally {
+        await mongoClient.close();
+    }
+};
+
 module.exports = {
     insertData,
+    authenticateUser
 };

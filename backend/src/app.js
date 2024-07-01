@@ -2,11 +2,15 @@ const express = require('express'); // npm install express
 const cors = require('cors'); // npm install cors
 const morgan = require('morgan'); // npm install morgan
 
+const bodyParser = require('body-parser');
+const { authenticateUser } = require('./config/db.mongo');
+
 const routes_admin = require('./routes/admin.routes');
 const routes_usuario = require('./routes/usuario.routes');
 const routes_recepcion = require('./routes/recepcion.routes');
 
 const app = express();
+app.use(bodyParser.json());
 app.use(morgan('dev'));
 app.use(cors({
     origin: '*',
@@ -29,6 +33,18 @@ app.get('/', (req ,res) => {
             editado: 'Este mensaje es enviado desde ejecucion'
         });
 })
+
+app.post('/api/login', async (req, res) => {
+    const { username, password } = req.body;
+    const result = await authenticateUser(username, password);
+    
+    if (result.success) {
+        res.status(200).json(result.user);
+    } else {
+        res.status(401).json({ message: result.message });
+    }
+});
+
 
 app.use('/admin', routes_admin);
 app.use('/usuario', routes_usuario);
