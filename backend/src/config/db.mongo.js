@@ -6,7 +6,7 @@ const {
     MONGO_PASSWORD,
     MONGO_HOST,
     MONGO_DATABASE,
-    MONGO_PORT,
+    MONGO_PORT
 } = process.env;
 
 
@@ -14,7 +14,7 @@ const uri = `mongodb://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_HOST}:${MONGO_POR
 //const uri = `mongodb://root:M1A2024.@localhost:27017`;
 
 const insertData = async(collec, data) => {
-    console.log('URI: ', uri)
+    console.log('URI: ', uri);
     const mongoClient = new MongoClient(uri);
     try {
         await mongoClient.connect().then(() => console.log('Conectado a la base de datos'));

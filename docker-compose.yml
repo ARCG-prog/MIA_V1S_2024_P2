@@ -19,24 +19,14 @@ services:
     container_name: mia-api
     restart: always
     ports:
-      - 3000:3000
-    depends_on:
-      - mongo
-    environment:
-      - MONGO_USER=${MONGO_USER}
-      - MONGO_PASSWORD=${MONGO_PASSWORD}
-      - MONGO_HOST=${MONGO_HOST}
-      - MONGO_PORT=${MONGO_PORT}
-      - MONGO_DATABASE=${MONGO_DATABASE}
-      - AWS_ACCESS_KEY_ID=${BUCKET_USER_ID}
-      - AWS_SECRET_ACCESS_KEY=${BUCKET_USER_SECRET}
+      - ${BACKEND_PORT}:${BACKEND_PORT}
 
   frontend:
     build: ./frontend
     container_name: mia-frontend
     restart: always
     ports:
-      - 80:80
+      - ${FRONTEND_PORT}:${FRONTEND_PORT}
     depends_on:
       - api
 
