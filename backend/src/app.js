@@ -10,7 +10,7 @@ const routes_usuario = require('./routes/usuario.routes');
 const routes_recepcion = require('./routes/recepcion.routes');
 
 const app = express();
-app.use(bodyParser.json());
+//app.use(bodyParser.json());
 app.use(morgan('dev'));
 app.use(cors({
     origin: '*',
