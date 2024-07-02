@@ -1,3 +1,16 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Admin Dashboard</a>
+
+      <span class="navbar-text">
+        <img *ngIf="currentUser?.imagen" [src]="currentUser?.imagen" alt="User Image" class="me-2 rounded-circle" style="width: 30px; height: 30px;">
+        {{currentUser?.usuario}}
+        <button class="btn btn-outline-danger ms-3" (click)="logout()">Cerrar sesión</button>
+      </span>
+
+    </div>
+</nav>
+
 <div class="container mt-4">
     <h2>Admin</h2>
     <ul class="nav nav-tabs" id="adminTabs" role="tablist">
@@ -27,8 +40,14 @@
           </div> -->
           <div class="col-12">
             <label for="imagen" class="form-label">Imagen</label>
-            <input formControlName="imagen" type="file" class="form-control" id="imagen">
-          </div>
+            <input 
+                type="file" name="imagen" 
+                class="form-control" 
+                id="imagen" 
+                accept="image/*"
+                (change)="onFileSelected($event)"
+                required>
+        </div>
           <div class="col-12">
             <label for="nombre" class="form-label">Nombre</label>
             <input formControlName="nombre" type="text" class="form-control" id="nombre" required>

@@ -105,44 +105,49 @@ export class RegistroComponent {
         
         const index = this.imagen_path.indexOf(",");
         this.imagen_path = this.imagen_path.slice(index + 1);
-        this.form_registro.value.imagen = this.imagen_path;
-        this.form_registro.value.path = this.imagen.name;
-        this.http.consult_post('/admin/registro', this.form_registro.value).subscribe({
-          next: (data: any) => {
-            if(data.status){
-              debugger
-              console.log('Usuario registrado');
-              console.log(data.image)
-              this.ruta_aws = data.image;
-              Swal.fire({
-                title: 'Usuario registrado',
-                text: 'Usuario registrado correctamente',
-                icon: 'success',
-                confirmButtonText: 'Aceptar'
-              });
-              this.router.navigate(['/login']);
-            }else{
+        if(this.imagen_path != ''){//validar imagen
+          this.form_registro.value.imagen = this.imagen_path;
+          this.form_registro.value.path = this.imagen.name;
+          this.http.consult_post('/admin/registro', this.form_registro.value).subscribe({
+            next: (data: any) => {
+              if(data.status){
+                debugger
+                console.log('Usuario registrado');
+                console.log(data.image)
+                this.ruta_aws = data.image;
+                Swal.fire({
+                  title: 'Usuario registrado',
+                  text: 'Usuario registrado correctamente',
+                  icon: 'success',
+                  confirmButtonText: 'Aceptar'
+                });
+                this.router.navigate(['/login']);
+              }else{
+                Swal.fire({
+                  title: 'Error al registrar usuario',
+                  text: 'Error al registrar usuario',
+                  icon: 'error',
+                  confirmButtonText: 'Aceptar'
+                });
+                console.log('Error al registrar usuario');
+              }
+            },
+            error: (error: any) => {
+              console.log(error.errors[0]);
               Swal.fire({
                 title: 'Error al registrar usuario',
-                text: 'Error al registrar usuario',
+                text: 'La base de datos no responde :c',
                 icon: 'error',
                 confirmButtonText: 'Aceptar'
               });
               console.log('Error al registrar usuario');
             }
-          },
-          error: (error: any) => {
-            console.log(error.errors[0]);
-            Swal.fire({
-              title: 'Error al registrar usuario',
-              text: 'La base de datos no responde :c',
-              icon: 'error',
-              confirmButtonText: 'Aceptar'
-            });
-            console.log('Error al registrar usuario');
           }
+          );
+        }else{
+          alert('Formulario incompleto, imagen no agregada');
+          console.log('Formulario incompleto');
         }
-        );
       }else{
         alert('Las contraseñas no coinciden');
         console.log('Las contraseñas no coinciden');
