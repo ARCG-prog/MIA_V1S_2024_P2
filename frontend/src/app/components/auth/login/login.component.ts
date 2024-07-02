@@ -55,7 +55,14 @@ export class LoginComponent {
           console.log('Login successful', response);
           // Handle successful login, e.g., store user data, navigate to dashboard, etc.
           //abrir otra componente de angular
-          this.router.navigate(['/admin']);
+          if(response.tipoUsuario == "admin"){
+            this.router.navigate(['/admin']);
+          }else if (response.tipoUsuario == "recepcionista"){
+            this.router.navigate(['/recepcionista']);
+          }else if (response.tipoUsuario == "turista"){
+            this.router.navigate(['/turista']);
+          }
+          
         },
         error => {
           Swal.fire({
