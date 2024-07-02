@@ -33,15 +33,18 @@ const insertData = async(collec, data) => {
 };
 
 const authenticateUser = async (username, password) => {
+    const mongoClient = new MongoClient(uri);
     try {
         await mongoClient.connect();
         const dbmongo = mongoClient.db(MONGO_DATABASE);
-        const coleccion = dbmongo.collection('usuarios');
-        const user = await coleccion.findOne({ username: username });
-        
-        if (user && bcrypt.compareSync(password, user.password)) {
+        const coleccion = dbmongo.collection('Usuarios');
+        const user = await coleccion.findOne({ usuario: username });
+        console.log(user);
+        if (user && password == user.password) {
+            console.log(user);
             return { success: true, user: user };
         } else {
+            console.log("Usuario no encontrado");
             return { success: false, message: 'Invalid credentials' };
         }
     } catch (error) {
