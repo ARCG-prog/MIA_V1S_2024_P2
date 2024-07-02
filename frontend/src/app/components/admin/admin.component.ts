@@ -58,17 +58,7 @@ export class AdminComponent implements OnInit {
     ciudad: new FormControl('', Validators.required),
   });
 
-  usuarios = [
-    // Aquí puedes agregar datos de prueba para la tabla de usuarios
-    {
-      id: 1,
-      nombre: 'Juan',
-      apellido: 'Perez',
-      usuario: 'juanperez',
-      correo: 'juan@gmail.com',
-      tipoUsuario: 'admin'
-    },
-  ];
+  usuarios: any[] = [];
 
   vuelos = [
     // Aquí puedes agregar datos de prueba para la tabla de historial de vuelos
@@ -92,6 +82,44 @@ export class AdminComponent implements OnInit {
   ngOnInit(): void {
     this.currentUser = this.authService.getCurrentUser();
     console.log("=========Usuario actual:", this.currentUser);
+    this.getUsuarios();
+  }
+  getUsuarios(){
+    this.http.consult_get('/admin/getUsuarios').subscribe({
+      next: (data: any) => {
+        if(data.status){
+          console.log('Usuarios tomados');
+          // Swal.fire({
+          //   title: 'Datos usuarios tomados',
+          //   text: 'exito',
+          //   icon: 'success',
+          //   confirmButtonText: 'Aceptar'
+          // });
+          // console.log(data);
+          this.usuarios = data.data;
+          //this.router.navigate(['/login']);
+        }else{
+          Swal.fire({
+            title: 'Error al error al recibir datos',
+            text: 'Error',
+            icon: 'error',
+            confirmButtonText: 'Aceptar'
+          });
+          console.log('Error al recibir datos');
+        }
+      },
+      error: (error: any) => {
+        console.log(error.errors[0]);
+        Swal.fire({
+          title: 'Error al recibir datos',
+          text: 'La base de datos no responde :c',
+          icon: 'error',
+          confirmButtonText: 'Aceptar'
+        });
+        console.log('Error al recibir datos');
+      }
+    }
+    );
   }
 
   submitUserForm() {
@@ -237,13 +265,58 @@ export class AdminComponent implements OnInit {
     }
   }
 
-  eliminarUsuario(id: string) {
-    console.log('Eliminar usuario con ID:', id);
-    // Lógica para eliminar el usuario
+  eliminarUsuario(_id: string) {
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: '¿Estás seguro de que deseas eliminar este usuario?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if(result.isConfirmed){
+        //this.usuarios = this.usuarios.filter((usuario) => usuario.id !== id);
+        console.log('-------------------id: '+_id);
+        this.http.consult_post('/admin/deleteUsuario', {id: _id}).subscribe({
+          next: (data: any) => {
+            if(data.status){
+              console.log('Usuario eliminado');
+              //mensaje de eiliminacion
+              Swal.fire({
+                title: 'Usuario eliminado',
+                text: 'Usuario eliminado correctamente',
+                icon: 'success',
+                confirmButtonText: 'Aceptar'
+              });
+              this.getUsuarios();
+            }else{
+              Swal.fire({
+                title: 'Error al error al eliminar usuario',
+                text: 'Error',
+                icon: 'error',
+                confirmButtonText: 'Aceptar'
+              });
+              console.log('Error al eliinar usuario');
+            }
+          },
+          error: (error: any) => {
+            console.log(error.errors[0]);
+            Swal.fire({
+              title: 'Error al eliminar usuario',
+              text: 'La base de datos no responde :c',
+              icon: 'error',
+              confirmButtonText: 'Aceptar'
+            });
+            console.log('Error al eliminar usuario');
+          }
+        }
+        );
+      }
+    });
   }
 
   eliminarVuelo(id: string) {
-    console.log('Eliminar vuelo con ID:', id);
+    //console.log('Eliminar vuelo con ID:', id);
     // Lógica para eliminar el vuelo
   }
 

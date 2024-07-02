@@ -1,4 +1,4 @@
-const { MongoClient} = require('mongodb');
+const { MongoClient, ObjectId} = require('mongodb');
 require('dotenv').config();
 const bcrypt = require('bcrypt');
 
@@ -32,6 +32,51 @@ const insertData = async(collec, data) => {
     }
 };
 
+const getData = async (collec) => {
+    console.log('URI: ', uri);
+    const mongoClient = new MongoClient(uri);
+    try {
+        await mongoClient.connect();
+        console.log('Conectado a la base de datos');
+        const dbmongo = mongoClient.db(MONGO_DATABASE);
+        const coleccion = dbmongo.collection(collec);
+        const result = await coleccion.find({}).toArray();
+        console.log(result);
+        return result;
+    } catch (error) {
+        console.error('Error getData: ', error);
+        return error;
+    } finally {
+        await mongoClient.close();
+        console.log('Desconectado de la base de datos');
+    }
+};
+
+const deleteData = async (collec, id) => {
+    console.log('URI: ', uri);
+    const mongoClient = new MongoClient(uri);
+    try {
+        await mongoClient.connect();
+        console.log('Conectado a la base de datos');
+        const dbmongo = mongoClient.db(MONGO_DATABASE);
+        const coleccion = dbmongo.collection(collec);
+        
+        // Convertir el id de cadena a ObjectId
+        console.log("id mongo:"+id);
+        const objectId = new ObjectId(id);
+        
+        // Eliminar el documento por _id
+        const result = await coleccion.deleteOne({ _id: objectId });
+        return result;
+    } catch (error) {
+        console.error('Error deleteData: ', error);
+        return error;
+    } finally {
+        await mongoClient.close();
+        console.log('Desconectado de la base de datos');
+    }
+};
+
 const authenticateUser = async (username, password) => {
     const mongoClient = new MongoClient(uri);
     try {
@@ -62,5 +107,7 @@ const authenticateUser = async (username, password) => {
 
 module.exports = {
     insertData,
+    getData,
+    deleteData,
     authenticateUser
 };

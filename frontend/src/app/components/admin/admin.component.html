@@ -109,14 +109,14 @@
             </thead>
             <tbody>
               <tr *ngFor="let usuario of usuarios">
-                <td>{{usuario.id}}</td>
+                <td>{{usuario._id}}</td>
                 <td>{{usuario.nombre}}</td>
                 <td>{{usuario.apellido}}</td>
                 <td>{{usuario.usuario}}</td>
                 <td>{{usuario.correo}}</td>
                 <td>{{usuario.tipoUsuario}}</td>
                 <td>
-                  <button class="btn btn-danger" (click)="eliminarUsuario(usuario.id.toString())">Eliminar</button>
+                  <button class="btn btn-danger" (click)="eliminarUsuario(usuario._id)">Eliminar</button>
                 </td>
               </tr>
             </tbody>

@@ -1,4 +1,4 @@
-const { insertData } = require('../config/db.mongo');
+const { insertData, getData, deleteData } = require('../config/db.mongo');
 const { uploadFile2 } = require('../config/bucket');
 // const { bcrypt } = require('bcryptjs');
 
@@ -154,9 +154,60 @@ const registroAuto = async (req, res) => {
 };
 
 
+const getUsuarios = async (req, res) => {
+    // Recibir los datos enviados desde el cliente
+    const result = await getData('Usuarios');
+
+    if(result instanceof Error) {
+        return res.status(500).json(
+            {
+                status: false,
+                msg: 'Error al obtener datos usuarios',
+                data: result
+            });
+    };
+
+    // Respuesta
+    console.log('Datos de usuarios obtenidos:', result);
+    return res.status(200).json({
+        status: true,
+        msg: 'Datos Usuarios obtenidos',
+        data: result
+    });
+};
+
+
+const deleteUsuario = async (req, res) => {
+    // Recibir los datos enviados desde el cliente
+    
+    const { id } = req.body;
+    const result = await deleteData('Usuarios', id);
+
+
+    if(result instanceof Error) {
+        return res.status(500).json(
+            {
+                status: false,
+                msg: 'Error al eliminar usuario',
+                data: result
+            });
+    };
+
+    // Respuesta
+    return res.status(200).json({
+        status: true,
+        msg: 'Eliminacion exitoso',
+        data: result
+    });
+};
+
+
+
 module.exports = {
     ciclo_for,
     registro,
     registroVuelo,
-    registroAuto
+    registroAuto,
+    getUsuarios,
+    deleteUsuario
 };

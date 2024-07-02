@@ -54,4 +54,8 @@ router.post('/registroAuto',
     adminController.registroAuto
 );
 
+router.get('/getUsuarios', adminController.getUsuarios);
+
+router.post('/deleteUsuario', adminController.deleteUsuario);
+
 module.exports = router;
