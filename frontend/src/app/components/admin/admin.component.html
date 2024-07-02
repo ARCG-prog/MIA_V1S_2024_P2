@@ -1,1 +1,198 @@
-<p>admin works!</p>
+<div class="container mt-4">
+    <h2>Admin</h2>
+    <ul class="nav nav-tabs" id="adminTabs" role="tablist">
+      <li class="nav-item" role="presentation">
+        <a class="nav-link active" id="add-users-tab" data-bs-toggle="tab" href="#add-users" role="tab" aria-controls="add-users" aria-selected="true">Agregar usuarios</a>
+      </li>
+      <li class="nav-item" role="presentation">
+        <a class="nav-link" id="view-users-tab" data-bs-toggle="tab" href="#view-users" role="tab" aria-controls="view-users" aria-selected="false">Ver usuarios</a>
+      </li>
+      <li class="nav-item" role="presentation">
+        <a class="nav-link" id="flight-history-tab" data-bs-toggle="tab" href="#flight-history" role="tab" aria-controls="flight-history" aria-selected="false">Historial de vuelos</a>
+      </li>
+      <li class="nav-item" role="presentation">
+        <a class="nav-link" id="add-trips-tab" data-bs-toggle="tab" href="#add-trips" role="tab" aria-controls="add-trips" aria-selected="false">Agregar viajes</a>
+      </li>
+      <li class="nav-item" role="presentation">
+        <a class="nav-link" id="add-cars-tab" data-bs-toggle="tab" href="#add-cars" role="tab" aria-controls="add-cars" aria-selected="false">Agregar automóviles</a>
+      </li>
+    </ul>
+    <div class="tab-content" id="adminTabsContent">
+      <!-- Agregar Usuarios Tab -->
+      <div class="tab-pane fade show active" id="add-users" role="tabpanel" aria-labelledby="add-users-tab">
+        <form [formGroup]="form_registro" (ngSubmit)="submitUserForm()" class="row g-3 mt-3">
+          <!-- <div class="col-12">
+            <label for="path" class="form-label">Path</label>
+            <input formControlName="path" type="text" class="form-control" id="path">
+          </div> -->
+          <div class="col-12">
+            <label for="imagen" class="form-label">Imagen</label>
+            <input formControlName="imagen" type="file" class="form-control" id="imagen">
+          </div>
+          <div class="col-12">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input formControlName="nombre" type="text" class="form-control" id="nombre" required>
+            <div class="invalid-feedback">Please enter your name!</div>
+          </div>
+          <div class="col-12">
+            <label for="apellido" class="form-label">Apellido</label>
+            <input formControlName="apellido" type="text" class="form-control" id="apellido" required>
+            <div class="invalid-feedback">Please enter your name!</div>
+          </div>
+          <div class="col-12">
+            <label for="usuario" class="form-label">Usuario</label>
+            <input formControlName="usuario" type="text" class="form-control" id="usuario" required>
+            <div class="invalid-feedback">Please enter your name!</div>
+          </div>
+          <div class="col-12">
+            <label for="correo" class="form-label">Correo</label>
+            <input formControlName="correo" type="email" class="form-control" id="correo" required>
+            <div class="invalid-feedback">Please enter a valid Email address!</div>
+          </div>
+          <div class="col-12">
+            <label for="password" class="form-label">Password</label>
+            <input formControlName="password" type="password" class="form-control" id="password" required>
+            <div class="invalid-feedback">Please enter your password!</div>
+          </div>
+          <div class="col-12">
+            <label for="confirm_password" class="form-label">Confirm password</label>
+            <input formControlName="confirm_password" type="password" class="form-control" id="confirm_password" required>
+            <div class="invalid-feedback">Please enter your password!</div>
+          </div>
+          <div class="col-12">
+            <label for="tipoUsuario" class="form-label">Tipo de Usuario</label>
+            <select formControlName="tipoUsuario" class="form-control" id="tipoUsuario" required>
+              <option value="" disabled selected>Select User Type</option>
+              <option value="admin">admin</option>
+              <option value="recepcionista">recepcionista</option>
+              <option value="turista">turista</option>
+            </select>
+          </div>
+          <div class="col-12">
+            <button class="btn btn-primary w-100" type="submit">Agregar Usuario</button>
+          </div>
+        </form>
+      </div>
+      <!-- Ver Usuarios Tab -->
+      <div class="tab-pane fade" id="view-users" role="tabpanel" aria-labelledby="view-users-tab">
+        <div class="table-responsive mt-3">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Apellido</th>
+                <th scope="col">Usuario</th>
+                <th scope="col">Correo</th>
+                <th scope="col">Tipo de Usuario</th>
+                <th scope="col">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let usuario of usuarios">
+                <td>{{usuario.id}}</td>
+                <td>{{usuario.nombre}}</td>
+                <td>{{usuario.apellido}}</td>
+                <td>{{usuario.usuario}}</td>
+                <td>{{usuario.correo}}</td>
+                <td>{{usuario.tipoUsuario}}</td>
+                <td>
+                  <button class="btn btn-danger" (click)="eliminarUsuario(usuario.id.toString())">Eliminar</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- Historial de Vuelos Tab -->
+      <div class="tab-pane fade" id="flight-history" role="tabpanel" aria-labelledby="flight-history-tab">
+        <div class="table-responsive mt-3">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Fecha</th>
+                <th scope="col">Origen</th>
+                <th scope="col">Destino</th>
+                <th scope="col">Pasajeros</th>
+                <th scope="col">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let vuelo of vuelos">
+                <td>{{vuelo.id}}</td>
+                <td>{{vuelo.fecha}}</td>
+                <td>{{vuelo.origen}}</td>
+                <td>{{vuelo.destino}}</td>
+                <td>{{vuelo.pasajeros}}</td>
+                <td>
+                  <button class="btn btn-danger" (click)="eliminarVuelo(vuelo.id.toString())">Eliminar</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- Agregar Viajes Tab -->
+      <div class="tab-pane fade" id="add-trips" role="tabpanel" aria-labelledby="add-trips-tab">
+        <form [formGroup]="form_registro_viajes" (ngSubmit)="submitTripForm()" class="row g-3 mt-3">
+          <div class="col-12">
+            <label for="nombreAgencia" class="form-label">Nombre de la Agencia</label>
+            <input formControlName="nombreAgencia" type="text" class="form-control" id="nombreAgencia" required>
+          </div>
+          <div class="col-12">
+            <label for="ciudadOrigen" class="form-label">Ciudad de Origen</label>
+            <input formControlName="ciudadOrigen" type="text" class="form-control" id="ciudadOrigen" required>
+          </div>
+          <div class="col-12">
+            <label for="ciudadDestino" class="form-label">Ciudad de Destino</label>
+            <input formControlName="ciudadDestino" type="text" class="form-control" id="ciudadDestino" required>
+          </div>
+          <div class="col-12">
+            <label for="diasDeVuelo" class="form-label">Días de Vuelo</label>
+            <input formControlName="diasDeVuelo" type="text" class="form-control" id="diasDeVuelo" required>
+          </div>
+          <div class="col-12">
+            <label for="precioDeVuelo" class="form-label">Precio de Vuelo</label>
+            <input formControlName="precioDeVuelo" type="number" class="form-control" id="precioDeVuelo" required>
+          </div>
+          <div class="col-12">
+            <button class="btn btn-primary w-100" type="submit">Agregar Viaje</button>
+          </div>
+        </form>
+      </div>
+      <!-- Agregar Automóviles Tab -->
+      <div class="tab-pane fade" id="add-cars" role="tabpanel" aria-labelledby="add-cars-tab">
+        <form [formGroup]="form_registro_autos" (ngSubmit)="submitCarForm()" class="row g-3 mt-3">
+          <div class="col-12">
+            <label for="nombreAgencia" class="form-label">Nombre de la Agencia</label>
+            <input formControlName="nombreAgencia" type="text" class="form-control" id="nombreAgencia" required>
+          </div>
+          <div class="col-12">
+            <label for="marca" class="form-label">Marca</label>
+            <input formControlName="marca" type="text" class="form-control" id="marca" required>
+          </div>
+          <div class="col-12">
+            <label for="placa" class="form-label">Placa</label>
+            <input formControlName="placa" type="text" class="form-control" id="placa" required>
+          </div>
+          <div class="col-12">
+            <label for="modelo" class="form-label">Modelo</label>
+            <input formControlName="modelo" type="text" class="form-control" id="modelo" required>
+          </div>
+          <div class="col-12">
+            <label for="precio" class="form-label">Precio</label>
+            <input formControlName="precio" type="number" class="form-control" id="precio" required>
+          </div>
+          <div class="col-12">
+            <label for="ciudad" class="form-label">Ciudad</label>
+            <input formControlName="ciudad" type="text" class="form-control" id="ciudad" required>
+          </div>
+          <div class="col-12">
+            <button class="btn btn-primary w-100" type="submit">Agregar Automóvil</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
