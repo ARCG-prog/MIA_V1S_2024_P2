@@ -70,7 +70,8 @@ export class RegistroComponent {
     usuario: new FormControl('', Validators.required),
     correo: new FormControl('', Validators.required),
     password: new FormControl('', Validators.required),
-    confirm_password: new FormControl('', Validators.required)
+    confirm_password: new FormControl('', Validators.required),
+    tipoUsuario: new FormControl('', Validators.required),
   });
 
   // [
@@ -97,6 +98,8 @@ export class RegistroComponent {
   }
 
   registrar(){
+    console.log(this.form_registro);
+    console.log(this.form_registro.valid);
     if(this.form_registro.valid){
       if(this.form_registro.value.password === this.form_registro.value.confirm_password){
         
@@ -117,7 +120,7 @@ export class RegistroComponent {
                 icon: 'success',
                 confirmButtonText: 'Aceptar'
               });
-              // this.router.navigate(['']);
+              this.router.navigate(['/login']);
             }else{
               Swal.fire({
                 title: 'Error al registrar usuario',

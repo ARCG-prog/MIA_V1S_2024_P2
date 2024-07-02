@@ -30,11 +30,11 @@ const ciclo_for = async (req, res) =>  {
 
 const registro = async (req, res) => {
     // Recibir los datos enviados desde el cliente
-    const { path, imagen, nombre, apellido, usuario, correo, password } = req.body;
+    const { path, imagen, nombre, apellido, usuario, correo, password, tipoUsuario } = req.body;
 
     // Manipulacion de datos
     // Insertar datos a la base de datos
-    console.log('Datos recibidos', nombre, apellido, usuario, correo, password);
+    console.log('Datos recibidos', nombre, apellido, usuario, correo, password, tipoUsuario);
 
     // const p_2 = await bcrypt.hash(password, 10);
     await uploadFile2(path, imagen);
@@ -48,7 +48,8 @@ const registro = async (req, res) => {
         apellido,
         usuario,
         correo,
-        password //: p_2
+        password,
+        tipoUsuario
     });
 
 

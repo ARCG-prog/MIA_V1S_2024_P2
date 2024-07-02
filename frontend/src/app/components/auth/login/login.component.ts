@@ -25,12 +25,12 @@ export class LoginComponent {
   //loginForm: FormGroup;
   //authservice = new AuthService();
 
-  constructor(private fb: FormBuilder, private authService: AuthService) {
-    // this.loginForm = this.fb.group({
-    //   usuario: ['', Validators.required],
-    //   password: ['', Validators.required]
-    // });
-  }
+  constructor(
+    private authService: AuthService,
+    private http: UsuarioService,
+    private router: Router
+  ) {}
+
   loginForm = new FormGroup({
     username: new FormControl('', Validators.required),
     password: new FormControl('', Validators.required)
@@ -55,6 +55,7 @@ export class LoginComponent {
           console.log('Login successful', response);
           // Handle successful login, e.g., store user data, navigate to dashboard, etc.
           //abrir otra componente de angular
+          this.router.navigate(['/admin']);
         },
         error => {
           Swal.fire({
