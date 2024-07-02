@@ -38,7 +38,7 @@ export class LoginComponent {
 
   login() {
     console.log("-------------soy el método log in--------------");
-    console.log(this.loginForm);
+    //console.log(this.loginForm);
     if(this.loginForm.valid){
       //const { usuario, password } = this.loginForm.value;
       const usuario = ''+this.loginForm.value.username;
@@ -46,10 +46,23 @@ export class LoginComponent {
       console.log("Usuario: "+usuario );
       this.authService.login(usuario, pass).subscribe(
         response => {
+          Swal.fire({
+            title: 'Usuario ingresado',
+            text: 'Usuario ingresado exitosamente',
+            icon: 'success',
+            confirmButtonText: 'Aceptar'
+          });
           console.log('Login successful', response);
           // Handle successful login, e.g., store user data, navigate to dashboard, etc.
+          //abrir otra componente de angular
         },
         error => {
+          Swal.fire({
+            title: 'Error ingresar usuario',
+            text: 'Error. Datos no encontrados',
+            icon: 'error',
+            confirmButtonText: 'Aceptar'
+          });
           console.error('Login failed', error);
           // Handle login failure, e.g., show error message
         }
