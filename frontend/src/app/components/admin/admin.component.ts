@@ -60,16 +60,9 @@ export class AdminComponent implements OnInit {
 
   usuarios: any[] = [];
 
-  vuelos = [
-    // Aquí puedes agregar datos de prueba para la tabla de historial de vuelos
-    {
-      id: 1,
-      fecha: '10/11/2028',
-      origen: 'Miami',
-      destino: 'Mikasa',
-      pasajeros: '10',
-    },
-  ];
+  vuelos: any[] = [];
+
+  autos: any[] = [];
 
   constructor(
     private http: UsuarioService,
@@ -82,7 +75,13 @@ export class AdminComponent implements OnInit {
   ngOnInit(): void {
     this.currentUser = this.authService.getCurrentUser();
     console.log("=========Usuario actual:", this.currentUser);
-    this.getUsuarios();
+    //this.getUsuarios();
+    // this.getUsuarios();
+    // this.getVuelos();
+    // this.getAutos();
+    this.getCollection('Usuarios');
+    this.getCollection('Vuelos');
+    this.getCollection('Autos');
   }
   getUsuarios(){
     this.http.consult_get('/admin/getUsuarios').subscribe({
@@ -97,6 +96,129 @@ export class AdminComponent implements OnInit {
           // });
           // console.log(data);
           this.usuarios = data.data;
+          //this.router.navigate(['/login']);
+        }else{
+          Swal.fire({
+            title: 'Error al error al recibir datos',
+            text: 'Error',
+            icon: 'error',
+            confirmButtonText: 'Aceptar'
+          });
+          console.log('Error al recibir datos');
+        }
+      },
+      error: (error: any) => {
+        console.log(error.errors[0]);
+        Swal.fire({
+          title: 'Error al recibir datos',
+          text: 'La base de datos no responde :c',
+          icon: 'error',
+          confirmButtonText: 'Aceptar'
+        });
+        console.log('Error al recibir datos');
+      }
+    }
+    );
+  }
+
+  getVuelos(){
+    this.http.consult_get('/admin/getVuelos').subscribe({
+      next: (data: any) => {
+        if(data.status){
+          console.log('Vuelos tomados');
+          // Swal.fire({
+          //   title: 'Datos usuarios tomados',
+          //   text: 'exito',
+          //   icon: 'success',
+          //   confirmButtonText: 'Aceptar'
+          // });
+          // console.log(data);
+          this.vuelos = data.data;
+          //this.router.navigate(['/login']);
+        }else{
+          Swal.fire({
+            title: 'Error al error al recibir datos',
+            text: 'Error',
+            icon: 'error',
+            confirmButtonText: 'Aceptar'
+          });
+          console.log('Error al recibir datos');
+        }
+      },
+      error: (error: any) => {
+        console.log(error.errors[0]);
+        Swal.fire({
+          title: 'Error al recibir datos',
+          text: 'La base de datos no responde :c',
+          icon: 'error',
+          confirmButtonText: 'Aceptar'
+        });
+        console.log('Error al recibir datos');
+      }
+    }
+    );
+  }
+
+  getAutos(){
+    this.http.consult_get('/admin/getAutos').subscribe({
+      next: (data: any) => {
+        if(data.status){
+          console.log('Autos tomados');
+          // Swal.fire({
+          //   title: 'Datos usuarios tomados',
+          //   text: 'exito',
+          //   icon: 'success',
+          //   confirmButtonText: 'Aceptar'
+          // });
+          // console.log(data);
+          this.autos = data.data;
+          //this.router.navigate(['/login']);
+        }else{
+          Swal.fire({
+            title: 'Error al error al recibir datos',
+            text: 'Error',
+            icon: 'error',
+            confirmButtonText: 'Aceptar'
+          });
+          console.log('Error al recibir datos');
+        }
+      },
+      error: (error: any) => {
+        console.log(error.errors[0]);
+        Swal.fire({
+          title: 'Error al recibir datos',
+          text: 'La base de datos no responde :c',
+          icon: 'error',
+          confirmButtonText: 'Aceptar'
+        });
+        console.log('Error al recibir datos');
+      }
+    }
+    );
+  }
+
+  getCollection(tipo: string){
+    this.http.consult_get('/admin/get'+tipo).subscribe({
+      next: (data: any) => {
+        if(data.status){
+          console.log(tipo+' tomados');
+          // Swal.fire({
+          //   title: 'Datos usuarios tomados',
+          //   text: 'exito',
+          //   icon: 'success',
+          //   confirmButtonText: 'Aceptar'
+          // });
+          // console.log(data);
+          if (tipo === 'Usuarios') {
+            this.usuarios = data.data;
+            console.log(this.usuarios);
+          } else if (tipo === 'Autos') {
+            this.autos = data.data;
+            console.log(this.autos);
+          } else if (tipo === 'Vuelos') {
+            this.vuelos = data.data;
+            console.log(this.vuelos);
+          }
           //this.router.navigate(['/login']);
         }else{
           Swal.fire({
@@ -265,7 +387,7 @@ export class AdminComponent implements OnInit {
     }
   }
 
-  eliminarUsuario(_id: string) {
+  eliminarDato(tipo: string,_id: string) {
     Swal.fire({
       title: '¿Estás seguro?',
       text: '¿Estás seguro de que deseas eliminar este usuario?',
@@ -277,37 +399,48 @@ export class AdminComponent implements OnInit {
       if(result.isConfirmed){
         //this.usuarios = this.usuarios.filter((usuario) => usuario.id !== id);
         console.log('-------------------id: '+_id);
-        this.http.consult_post('/admin/deleteUsuario', {id: _id}).subscribe({
+        this.http.consult_post('/admin/delete'+tipo, {id: _id}).subscribe({
           next: (data: any) => {
             if(data.status){
               console.log('Usuario eliminado');
               //mensaje de eiliminacion
               Swal.fire({
-                title: 'Usuario eliminado',
-                text: 'Usuario eliminado correctamente',
+                title: tipo+' eliminado',
+                text: tipo+' eliminado correctamente',
                 icon: 'success',
                 confirmButtonText: 'Aceptar'
               });
-              this.getUsuarios();
+              // if (tipo === 'Usuario') {
+              //   this.usuarios = data.data;
+              //   console.log(this.usuarios);
+              // } else if (tipo === 'Auto') {
+              //   this.autos = data.data;
+              //   console.log(this.autos);
+              // } else if (tipo === 'Vuelo') {
+              //   this.vuelos = data.data;
+              //   console.log(this.vuelos);
+              // }
+              this.getCollection(tipo+'s');
+              
             }else{
               Swal.fire({
-                title: 'Error al error al eliminar usuario',
+                title: 'Error al error al eliminar ' +tipo,
                 text: 'Error',
                 icon: 'error',
                 confirmButtonText: 'Aceptar'
               });
-              console.log('Error al eliinar usuario');
+              console.log('Error al eliminar ' +tipo);
             }
           },
           error: (error: any) => {
             console.log(error.errors[0]);
             Swal.fire({
-              title: 'Error al eliminar usuario',
+              title: 'Error al eliminar ' +tipo,
               text: 'La base de datos no responde :c',
               icon: 'error',
               confirmButtonText: 'Aceptar'
             });
-            console.log('Error al eliminar usuario');
+            console.log('Error al eliminar ' +tipo);
           }
         }
         );

@@ -201,6 +201,99 @@ const deleteUsuario = async (req, res) => {
     });
 };
 
+const getAutos = async (req, res) => {
+    // Recibir los datos enviados desde el cliente
+    const result = await getData('Autos');
+
+    if(result instanceof Error) {
+        return res.status(500).json(
+            {
+                status: false,
+                msg: 'Error al obtener datos Autos',
+                data: result
+            });
+    };
+
+    // Respuesta
+    console.log('Datos de Autos obtenidos:', result);
+    return res.status(200).json({
+        status: true,
+        msg: 'Datos Autos obtenidos',
+        data: result
+    });
+};
+
+
+const deleteAuto= async (req, res) => {
+    // Recibir los datos enviados desde el cliente
+    
+    const { id } = req.body;
+    const result = await deleteData('Autos', id);
+
+
+    if(result instanceof Error) {
+        return res.status(500).json(
+            {
+                status: false,
+                msg: 'Error al eliminar Autos',
+                data: result
+            });
+    };
+
+    // Respuesta
+    return res.status(200).json({
+        status: true,
+        msg: 'Eliminacion exitoso',
+        data: result
+    });
+};
+
+const getVuelos = async (req, res) => {
+    // Recibir los datos enviados desde el cliente
+    const result = await getData('Vuelos');
+
+    if(result instanceof Error) {
+        return res.status(500).json(
+            {
+                status: false,
+                msg: 'Error al obtener datos vuelos',
+                data: result
+            });
+    };
+
+    // Respuesta
+    console.log('Datos de vuelos obtenidos:', result);
+    return res.status(200).json({
+        status: true,
+        msg: 'Datos Vuelos obtenidos',
+        data: result
+    });
+};
+
+
+const deleteVuelo = async (req, res) => {
+    // Recibir los datos enviados desde el cliente
+    
+    const { id } = req.body;
+    const result = await deleteData('Vuelos', id);
+
+
+    if(result instanceof Error) {
+        return res.status(500).json(
+            {
+                status: false,
+                msg: 'Error al eliminar vuelo',
+                data: result
+            });
+    };
+
+    // Respuesta
+    return res.status(200).json({
+        status: true,
+        msg: 'Eliminacion exitoso',
+        data: result
+    });
+};
 
 
 module.exports = {
@@ -209,5 +302,9 @@ module.exports = {
     registroVuelo,
     registroAuto,
     getUsuarios,
-    deleteUsuario
+    deleteUsuario,
+    getVuelos,
+    deleteVuelo,
+    getAutos,
+    deleteAuto
 };

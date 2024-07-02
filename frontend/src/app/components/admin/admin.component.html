@@ -21,6 +21,12 @@
         <a class="nav-link" id="view-users-tab" data-bs-toggle="tab" href="#view-users" role="tab" aria-controls="view-users" aria-selected="false">Ver usuarios</a>
       </li>
       <li class="nav-item" role="presentation">
+        <a class="nav-link" id="view-vuelos-tab" data-bs-toggle="tab" href="#view-vuelos" role="tab" aria-controls="view-vuelos" aria-selected="false">Ver vuelos</a>
+      </li>
+      <li class="nav-item" role="presentation">
+        <a class="nav-link" id="view-autos-tab" data-bs-toggle="tab" href="#view-autos" role="tab" aria-controls="view-autos" aria-selected="false">Ver autos</a>
+      </li>
+      <li class="nav-item" role="presentation">
         <a class="nav-link" id="flight-history-tab" data-bs-toggle="tab" href="#flight-history" role="tab" aria-controls="flight-history" aria-selected="false">Historial de vuelos</a>
       </li>
       <li class="nav-item" role="presentation">
@@ -116,7 +122,70 @@
                 <td>{{usuario.correo}}</td>
                 <td>{{usuario.tipoUsuario}}</td>
                 <td>
-                  <button class="btn btn-danger" (click)="eliminarUsuario(usuario._id)">Eliminar</button>
+                  <button class="btn btn-danger" (click)="eliminarDato('Usuario',usuario._id)">Eliminar</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- Ver Vuelos Tab -->
+      <div class="tab-pane fade" id="view-vuelos" role="tabpanel" aria-labelledby="view-vuelos-tab">
+        <div class="table-responsive mt-3">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Nombre Agencia</th>
+                <th scope="col">Ciudad de Origen</th>
+                <th scope="col">Ciudad de Destino</th>
+                <th scope="col">Dias de Vuelo</th>
+                <th scope="col">Precio de Vuelo</th>
+                <th scope="col">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let vuelo of vuelos">
+                <td>{{vuelo._id}}</td>
+                <td>{{vuelo.nombreAgencia}}</td>
+                <td>{{vuelo.ciudadOrigen}}</td>
+                <td>{{vuelo.ciudadDestino}}</td>
+                <td>{{vuelo.diasDeVuelo}}</td>
+                <td>{{vuelo.precioDeVuelo}}</td>
+                <td>
+                  <button class="btn btn-danger" (click)="eliminarDato('Vuelo',vuelo._id)">Eliminar</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- Ver Autos Tab -->
+      <div class="tab-pane fade" id="view-autos" role="tabpanel" aria-labelledby="view-autos-tab">
+        <div class="table-responsive mt-3">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Nombre Agencia</th>
+                <th scope="col">Marca</th>
+                <th scope="col">Placa</th>
+                <th scope="col">Modelo</th>
+                <th scope="col">Precio de Vuelo</th>
+                <th scope="col">Ciudad</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let auto of autos">
+                <td>{{auto._id}}</td>
+                <td>{{auto.nombreAgencia}}</td>
+                <td>{{auto.marca}}</td>
+                <td>{{auto.placa}}</td>
+                <td>{{auto.modelo}}</td>
+                <td>{{auto.precio}}</td>
+                <td>{{auto.ciudad}}</td>
+                <td>
+                  <button class="btn btn-danger" (click)="eliminarDato('Auto',auto._id)">Eliminar</button>
                 </td>
               </tr>
             </tbody>
@@ -130,20 +199,14 @@
             <thead>
               <tr>
                 <th scope="col">ID</th>
-                <th scope="col">Fecha</th>
-                <th scope="col">Origen</th>
-                <th scope="col">Destino</th>
-                <th scope="col">Pasajeros</th>
+                <th scope="col">Log</th>
                 <th scope="col">Acciones</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let vuelo of vuelos">
                 <td>{{vuelo.id}}</td>
-                <td>{{vuelo.fecha}}</td>
-                <td>{{vuelo.origen}}</td>
-                <td>{{vuelo.destino}}</td>
-                <td>{{vuelo.pasajeros}}</td>
+                <td>{{vuelo.log}}</td>
                 <td>
                   <button class="btn btn-danger" (click)="eliminarVuelo(vuelo.id.toString())">Eliminar</button>
                 </td>

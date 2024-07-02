@@ -58,4 +58,12 @@ router.get('/getUsuarios', adminController.getUsuarios);
 
 router.post('/deleteUsuario', adminController.deleteUsuario);
 
+router.get('/getVuelos', adminController.getVuelos);
+
+router.post('/deleteVuelo', adminController.deleteVuelo);
+
+router.get('/getAutos', adminController.getAutos);
+
+router.post('/deleteAuto', adminController.deleteAuto);
+
 module.exports = router;
