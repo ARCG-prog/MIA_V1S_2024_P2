@@ -108,7 +108,7 @@ export class AdminComponent implements OnInit {
           this.http.consult_post('/admin/registro', this.form_registro.value).subscribe({
             next: (data: any) => {
               if(data.status){
-                debugger
+                //debugger
                 console.log('Usuario registrado');
                 console.log(data.image)
                 this.ruta_aws = data.image;
@@ -118,7 +118,7 @@ export class AdminComponent implements OnInit {
                   icon: 'success',
                   confirmButtonText: 'Aceptar'
                 });
-                this.router.navigate(['/login']);
+                //this.router.navigate(['/login']);
               }else{
                 Swal.fire({
                   title: 'Error al registrar usuario',
@@ -156,16 +156,84 @@ export class AdminComponent implements OnInit {
   }
 
   submitTripForm() {
-    if (this.form_registro_viajes.valid) {
-      console.log(this.form_registro_viajes.value);
-      // Lógica para enviar el formulario
+    if(this.form_registro_viajes.valid){
+      this.http.consult_post('/admin/registroVuelo', this.form_registro_viajes.value).subscribe({
+        next: (data: any) => {
+          if(data.status){
+            console.log('Vuelo registrado');
+            Swal.fire({
+              title: 'Vuelo registrado',
+              text: 'Vuelo registrado correctamente',
+              icon: 'success',
+              confirmButtonText: 'Aceptar'
+            });
+            //this.router.navigate(['/login']);
+          }else{
+            Swal.fire({
+              title: 'Error al registrar Vuelo',
+              text: 'Error al registrar Vuelo',
+              icon: 'error',
+              confirmButtonText: 'Aceptar'
+            });
+            console.log('Error al registrar Vuelo');
+          }
+        },
+        error: (error: any) => {
+          console.log(error.errors[0]);
+          Swal.fire({
+            title: 'Error al registrar Vuelo',
+            text: 'La base de datos no responde :c',
+            icon: 'error',
+            confirmButtonText: 'Aceptar'
+          });
+          console.log('Error al registrar Vuelo');
+        }
+      }
+      );
+    }else{
+      alert('Formulario incompleto');
+      console.log('Formulario incompleto');
     }
   }
 
   submitCarForm() {
-    if (this.form_registro_autos.valid) {
-      console.log(this.form_registro_autos.value);
-      // Lógica para enviar el formulario
+    if(this.form_registro_autos.valid){
+      this.http.consult_post('/admin/registroAuto', this.form_registro_autos.value).subscribe({
+        next: (data: any) => {
+          if(data.status){
+            console.log('Auto registrado');
+            Swal.fire({
+              title: 'Auto registrado',
+              text: 'Auto registrado correctamente',
+              icon: 'success',
+              confirmButtonText: 'Aceptar'
+            });
+            //this.router.navigate(['/login']);
+          }else{
+            Swal.fire({
+              title: 'Error al registrar Auto',
+              text: 'Error al registrar Auto',
+              icon: 'error',
+              confirmButtonText: 'Aceptar'
+            });
+            console.log('Error al registrar Auto');
+          }
+        },
+        error: (error: any) => {
+          console.log(error.errors[0]);
+          Swal.fire({
+            title: 'Error al registrar Auto',
+            text: 'La base de datos no responde :c',
+            icon: 'error',
+            confirmButtonText: 'Aceptar'
+          });
+          console.log('Error al registrar Auto');
+        }
+      }
+      );
+    }else{
+      alert('Formulario incompleto');
+      console.log('Formulario incompleto');
     }
   }
 

@@ -111,7 +111,7 @@ export class RegistroComponent {
           this.http.consult_post('/admin/registro', this.form_registro.value).subscribe({
             next: (data: any) => {
               if(data.status){
-                debugger
+                //debugger
                 console.log('Usuario registrado');
                 console.log(data.image)
                 this.ruta_aws = data.image;

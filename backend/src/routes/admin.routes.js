@@ -28,4 +28,30 @@ router.post('/registro',
 );
 
 
+router.post('/registroVuelo',
+    [
+        check('nombreAgencia', 'El nombre es obligatorio').notEmpty(),
+        check('ciudadOrigen', 'El apellido es obligatorio').notEmpty(),
+        check('ciudadDestino', 'El usuario es obligatorio').notEmpty(),
+        check('diasDeVuelo', 'El correo es obligatorio').notEmpty(),
+        check('precioDeVuelo', 'El password es obligatorio').notEmpty(),
+        validate
+    ], 
+    adminController.registroVuelo
+);
+
+
+router.post('/registroAuto',
+    [
+        check('nombreAgencia', 'El nombre es obligatorio').notEmpty(),
+        check('marca', 'El apellido es obligatorio').notEmpty(),
+        check('placa', 'El usuario es obligatorio').notEmpty(),
+        check('modelo', 'El correo es obligatorio').notEmpty(),
+        check('precio', 'El password es obligatorio').notEmpty(),
+        check('ciudad', 'El password es obligatorio').notEmpty(),
+        validate
+    ],
+    adminController.registroAuto
+);
+
 module.exports = router;
