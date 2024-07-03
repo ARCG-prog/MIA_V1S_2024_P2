@@ -1,1 +1,97 @@
-<p>recepcionista works!</p>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Recepcionista Dashboard</a>
+
+      <span class="navbar-text">
+        <img *ngIf="currentUser?.imagen" [src]="currentUser?.imagen" alt="User Image" class="me-2 rounded-circle" style="width: 30px; height: 30px;">
+        {{currentUser?.usuario}}
+        <button class="btn btn-outline-danger ms-3" (click)="logout()">Cerrar sesión</button>
+      </span>
+
+    </div>
+</nav>
+
+<div class="container mt-4">
+    <h2>Admin</h2>
+    <ul class="nav nav-tabs" id="adminTabs" role="tablist">
+      <li class="nav-item" role="presentation">
+        <a class="nav-link" id="view-vuelos-tab" data-bs-toggle="tab" href="#view-vuelos" role="tab" aria-controls="view-vuelos" aria-selected="false">Ver vuelos</a>
+      </li>
+      <li class="nav-item" role="presentation">
+        <a class="nav-link" id="view-autos-tab" data-bs-toggle="tab" href="#view-autos" role="tab" aria-controls="view-autos" aria-selected="false">Ver autos</a>
+      </li>
+    </ul>
+    <div class="tab-content" id="adminTabsContent">
+      <!-- Ver Vuelos Tab -->
+      <div class="tab-pane fade" id="view-vuelos" role="tabpanel" aria-labelledby="view-vuelos-tab">
+        <div class="table-responsive mt-3">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Nombre Agencia</th>
+                <th scope="col">Ciudad de Origen</th>
+                <th scope="col">Ciudad de Destino</th>
+                <th scope="col">Dias de Vuelo</th>
+                <th scope="col">Precio de Vuelo</th>
+                <th scope="col">Reservado</th>
+                <th scope="col">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let vuelo of vuelos">
+                <td>{{vuelo._id}}</td>
+                <td>{{vuelo.nombreAgencia}}</td>
+                <td>{{vuelo.ciudadOrigen}}</td>
+                <td>{{vuelo.ciudadDestino}}</td>
+                <td>{{vuelo.diasDeVuelo}}</td>
+                <td>{{vuelo.precioDeVuelo}}</td>
+                <td>{{vuelo.reservado}}</td>
+                <td *ngIf="!vuelo.reservado">
+                    <button class="btn btn-danger" (click)="reservarDato('Vuelo',vuelo._id)">Reservar</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- Ver Autos Tab -->
+      <div class="tab-pane fade" id="view-autos" role="tabpanel" aria-labelledby="view-autos-tab">
+        <div class="table-responsive mt-3">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Nombre Agencia</th>
+                <th scope="col">Marca</th>
+                <th scope="col">Placa</th>
+                <th scope="col">Modelo</th>
+                <th scope="col">Precio de Vuelo</th>
+                <th scope="col">Ciudad</th>
+                <th scope="col">Reservado</th>
+                <th scope="col">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let auto of autos">
+                <td>{{auto._id}}</td>
+                <td>{{auto.nombreAgencia}}</td>
+                <td>{{auto.marca}}</td>
+                <td>{{auto.placa}}</td>
+                <td>{{auto.modelo}}</td>
+                <td>{{auto.precio}}</td>
+                <td>{{auto.ciudad}}</td>
+                <td>{{auto.reservado}}</td>
+                <td *ngIf="!auto.reservado">
+                    <button class="btn btn-danger" (click)="reservarDato('Auto',auto._id)">Reservar</button>
+                </td>
+                </tr>
+                  
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  

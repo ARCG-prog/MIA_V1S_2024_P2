@@ -66,4 +66,8 @@ router.get('/getAutos', adminController.getAutos);
 
 router.post('/deleteAuto', adminController.deleteAuto);
 
+router.post('/reservarVuelo', adminController.reservarVuelo);
+
+router.post('/reservarAuto', adminController.reservarAuto);
+
 module.exports = router;
