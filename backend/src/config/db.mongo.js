@@ -94,11 +94,39 @@ const reservarData = async (collec, id, usuario) => {
         const result = await coleccion.updateOne(
             { _id: objectId },
             { $set: { reservado: true } },
-            { $set: { reservadoPor: usuario } }
+            { $set: { reservadoPor: usuario+'' } }
         );
         return result;
     } catch (error) {
         console.error('Error reservarData: ', error);
+        return error;
+    } finally {
+        await mongoClient.close();
+        console.log('Desconectado de la base de datos');
+    }
+};
+
+const autorizarData = async (collec, id) => {
+    console.log('URI: ', uri);
+    const mongoClient = new MongoClient(uri);
+    try {
+        await mongoClient.connect();
+        console.log('Conectado a la base de datos');
+        const dbmongo = mongoClient.db(MONGO_DATABASE);
+        const coleccion = dbmongo.collection(collec);
+
+        // Convertir el id de cadena a ObjectId
+        console.log("id mongo:" + id);
+        const objectId = new ObjectId(id);
+
+        // Actualizar el documento por _id
+        const result = await coleccion.updateOne(
+            { _id: objectId },
+            { $set: { autorizado: true } },
+        );
+        return result;
+    } catch (error) {
+        console.error('Error autorizarData: ', error);
         return error;
     } finally {
         await mongoClient.close();
@@ -140,5 +168,6 @@ module.exports = {
     getData,
     deleteData,
     authenticateUser,
-    reservarData
+    reservarData,
+    autorizarData
 };

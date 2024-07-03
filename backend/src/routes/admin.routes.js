@@ -70,4 +70,8 @@ router.post('/reservarVuelo', adminController.reservarVuelo);
 
 router.post('/reservarAuto', adminController.reservarAuto);
 
+router.post('/autorizarVuelo', adminController.autorizarVuelo);
+
+router.post('/autorizarAuto', adminController.autorizarAuto);
+
 module.exports = router;

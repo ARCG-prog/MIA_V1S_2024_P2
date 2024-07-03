@@ -35,6 +35,8 @@
                 <th scope="col">Dias de Vuelo</th>
                 <th scope="col">Precio de Vuelo</th>
                 <th scope="col">Reservado</th>
+                <th scope="col">Reservado Por</th>
+                <th scope="col">Autorizado</th>
                 <th scope="col">Acciones</th>
               </tr>
             </thead>
@@ -47,8 +49,10 @@
                 <td>{{vuelo.diasDeVuelo}}</td>
                 <td>{{vuelo.precioDeVuelo}}</td>
                 <td>{{vuelo.reservado}}</td>
-                <td *ngIf="!vuelo.reservado">
-                    <button class="btn btn-danger" (click)="reservarDato('Vuelo',vuelo._id)">Reservar</button>
+                <td>{{vuelo.reservadoPor}}</td>
+                <td>{{vuelo.autorizado}}</td>
+                <td *ngIf="!vuelo.autorizado">
+                    <button class="btn btn-danger" (click)="autorizarDato('Vuelo',vuelo._id)">Reservar</button>
                 </td>
               </tr>
             </tbody>
@@ -69,6 +73,8 @@
                 <th scope="col">Precio de Vuelo</th>
                 <th scope="col">Ciudad</th>
                 <th scope="col">Reservado</th>
+                <th scope="col">Reservado Por</th>
+                <th scope="col">Autorizado</th>
                 <th scope="col">Acciones</th>
               </tr>
             </thead>
@@ -82,8 +88,10 @@
                 <td>{{auto.precio}}</td>
                 <td>{{auto.ciudad}}</td>
                 <td>{{auto.reservado}}</td>
+                <td>{{auto.reservadoPor}}</td>
+                <td>{{auto.autorizado}}</td>
                 <td *ngIf="!auto.reservado">
-                    <button class="btn btn-danger" (click)="reservarDato('Auto',auto._id)">Reservar</button>
+                    <button class="btn btn-danger" (click)="autorizarDato('Auto',auto._id)">Reservar</button>
                 </td>
                 </tr>
                   

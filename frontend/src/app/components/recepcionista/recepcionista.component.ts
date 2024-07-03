@@ -131,7 +131,7 @@ export class RecepcionistaComponent implements OnInit {
     });
   }
 
-  reservarDato(tipo: string,_id: string) {
+  autorizarDato(tipo: string,_id: string) {
     Swal.fire({
       title: '¿Estás seguro?',
       text: '¿Estás seguro de que deseas reservar este dato?',
@@ -143,14 +143,14 @@ export class RecepcionistaComponent implements OnInit {
       if(result.isConfirmed){
         //this.usuarios = this.usuarios.filter((usuario) => usuario.id !== id);
         console.log('-------------------id: '+_id);
-        this.http.consult_post('/admin/reservar'+tipo, {id: _id, usuario: this.currentUser.usuario}).subscribe({
+        this.http.consult_post('/admin/autorizar'+tipo, {id: _id}).subscribe({
           next: (data: any) => {
             if(data.status){
               //console.log('Usuario eliminado');
               //mensaje de eiliminacion
               Swal.fire({
-                title: tipo+' reservado',
-                text: tipo+' reservado correctamente',
+                title: tipo+' autorizado',
+                text: tipo+' autorizado correctamente',
                 icon: 'success',
                 confirmButtonText: 'Aceptar'
               });
@@ -158,29 +158,30 @@ export class RecepcionistaComponent implements OnInit {
               
             }else{
               Swal.fire({
-                title: 'Error al error al eliminar ' +tipo,
+                title: 'Error al error al autorizar ' +tipo,
                 text: 'Error',
                 icon: 'error',
                 confirmButtonText: 'Aceptar'
               });
-              console.log('Error al eliminar ' +tipo);
+              console.log('Error al autorizar ' +tipo);
             }
           },
           error: (error: any) => {
             console.log(error.errors[0]);
             Swal.fire({
-              title: 'Error al eliminar ' +tipo,
+              title: 'Error al autorizar ' +tipo,
               text: 'La base de datos no responde :c',
               icon: 'error',
               confirmButtonText: 'Aceptar'
             });
-            console.log('Error al eliminar ' +tipo);
+            console.log('Error al autorizar ' +tipo);
           }
         }
         );
       }
     });
   }
+
 
 
   //cerrar sesion

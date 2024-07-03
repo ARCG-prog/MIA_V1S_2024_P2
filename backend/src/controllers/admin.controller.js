@@ -1,4 +1,4 @@
-const { insertData, getData, deleteData, reservarData } = require('../config/db.mongo');
+const { insertData, getData, deleteData, reservarData, autorizarData } = require('../config/db.mongo');
 const { uploadFile2 } = require('../config/bucket');
 // const { bcrypt } = require('bcryptjs');
 
@@ -343,6 +343,54 @@ const reservarAuto = async (req, res) => {
     });
 };
 
+const autorizarVuelo = async (req, res) => {
+    // Recibir los datos enviados desde el cliente
+    
+    const { id } = req.body;
+    const result = await autorizarData('Vuelos', id);
+
+
+    if(result instanceof Error) {
+        return res.status(500).json(
+            {
+                status: false,
+                msg: 'Error al reservar vuelo',
+                data: result
+            });
+    };
+
+    // Respuesta
+    return res.status(200).json({
+        status: true,
+        msg: 'Eliminacion exitoso',
+        data: result
+    });
+};
+
+const autorizarAuto = async (req, res) => {
+    // Recibir los datos enviados desde el cliente
+    
+    const { id } = req.body;
+    const result = await autorizarData('Autos', id);
+
+
+    if(result instanceof Error) {
+        return res.status(500).json(
+            {
+                status: false,
+                msg: 'Error al reservar auto',
+                data: result
+            });
+    };
+
+    // Respuesta
+    return res.status(200).json({
+        status: true,
+        msg: 'Eliminacion exitoso',
+        data: result
+    });
+};
+
 
 module.exports = {
     ciclo_for,
@@ -356,5 +404,7 @@ module.exports = {
     getAutos,
     deleteAuto,
     reservarVuelo,
-    reservarAuto
+    reservarAuto,
+    autorizarVuelo,
+    autorizarAuto
 };
