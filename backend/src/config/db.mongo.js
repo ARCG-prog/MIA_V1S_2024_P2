@@ -12,7 +12,7 @@ const {
 
 
 const uri = `mongodb://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_HOST}:${MONGO_PORT}`;
-//const uri = `mongodb://root:M1A2024.@localhost:27017`;
+//const uri = `mongodb://root:M1A2024.@54.221.14.124:27017`;
 
 const insertData = async(collec, data) => {
     console.log('URI: ', uri);
